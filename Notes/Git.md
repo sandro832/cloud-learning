@@ -4,6 +4,19 @@ To download repository use this:
 
 git clone https://swissre@dev.azure.com/swissre/CLOUD-Enablement/_git/sandro-training
 
+## Git Setup
+git config --global user.name "Firstname Lastname" 
+git config --global user.email Firstname_Lastname@swissre.com
+
+git config --global http.proxy http://gate.zrh.swissre.com:8080
+
+https://artifact.swissre.com/software/DPS/git/sr-ca-bundle.crt  Zertifikat herunterladen in Verzeichniss %USERPROFILE%.
+
+git config --global http.sslcainfo C:\Users\st18c\sr-ca-bundle.crt 
+
+git config -l --global
+
+
 
 ## Pull Requests
 
