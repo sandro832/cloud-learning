@@ -88,6 +88,197 @@ will notify that person to come and view the comment.
 This is called an “@mention”, because you’re mentioning the individual. 
 You can also @mention teams within an organization.
 
+## Create Token for Accses
+
+Sign in to your organization in Azure DevOps (https://dev.azure.com/{yourorganization})
+
+From your home page, open your user settings, and then select Profile.
+
+My profile Team Services
+
+Under Security, select Personal access tokens, and then select + New Token.
+
+Select New Token to create
+
+Name your token, select the organization where you want to use the token, and then choose a lifespan for your token.
+
+Enter basic token information
+
+Select the scopes for this token to authorize for your specific tasks.
+
+For example, to create a token to enable a build and release agent to authenticate to Azure DevOps Services, limit your token's scope to Agent Pools (Read & manage). To read audit log events, and manage and delete streams, select Read Audit Log, and then select Create.
+
+Select scopes for your PAT
+
+When you're done, make sure to copy the token. You'll use this token as your password.
+
+Copy the token to your clipboard
+
+Use your personal access token
+
+Your token is your identity and represents you when it's used. Keep your tokens secret and treat them like your password.
+
+See the following examples of using your PAT.
+
+  Username: yourPAT
+  Password: yourPAT
+
+or
+
+git clone https://anything:{yourPAT}@dev.azure.com/yourOrgName/yourProjectName/_git/yourRepoName
+
+To keep your token more secure, use credential managers so you don't have to enter your credentials every time. We recommend the following credential managers:
+
+Git Credential Manager for macOS and Linux
+Git Credential Manager for Windows (requires Git for Windows)
+
+Revoke personal access tokens to remove access
+
+When you don't need your token anymore, revoke it to remove access.
+
+Note
+
+To enable the new user interface for the Project Permissions Settings Page, see Enable preview features.
+
+    Preview page
+    Current page
+
+From your home page, open your user settings, and then select Profile.
+
+My profile Team Services
+
+Under Security, select Personal access tokens. Select the token for which you want to revoke access, and then select Revoke.
+
+Revoke a token or all tokens
+
+Select Revoke in the confirmation dialog.
+
+Confirm revoke
+
+Related articles
+
+For more information about how security and identity are managed, see About security and identity.
+For more information about permissions and access levels for common user tasks, see Default permissions and access for Azure DevOps.
+For more information about how administrators can revoke organization user PATs, see Revoke other users' personal access tokens.
+
+Frequently asked questions (FAQs)
+Q: What is my Azure DevOps Services URL?
+
+A: https://dev.azure.com/ {your organization}
+Q: Is there a way to renew a PAT via REST API?
+
+A: No, we don't have a REST API to renew a PAT. You can only renew a PAT within the user interface (UI).
+Q: Can I use basic auth with all of Azure DevOps REST APIs?
+
+A: No. You can use basic auth with most of them, but organizations and profiles only support OAuth.
+Q: Where can I learn more about how to use PATs?
+
+A: For examples of how to use PATs, see Git credential managers, REST APIs, NuGet on a Mac, and Reporting clients.
+Q: Can I regenerate a PAT?
+
+A: No, but you can extend a PAT or modify its scope.
+Q: What notifications will I get about my PAT?
+
+A: Users receive two notifications during the lifetime of a PAT, one at creation and the other seven days before the expiration.
+
+The following notification is sent at PAT creation:
+
+PAT creation
+
+The following notification is sent - a PAT is near expiration:
+
+PAT near expiration notification
+Q: What does "full access" mean?
+
+A: The user has all access.
+Q: What do I do if I get an unexpected PAT notification?
+
+A: An administrator or a tool might have created a PAT on your behalf. See the following examples:
+
+    When you connect to an Azure DevOps Git repo through git.exe. it creates a token with a display name like "git: https://MyOrganization.visualstudio.com/ on MyMachine."
+    When you or an admin sets up an Azure App Service web app deployment, it creates a token with a display name like "Service Hooks: : Azure App Service: : Deploy web app."
+    When you or an admin sets up web load testing, as part of a pipeline, it creates a token with a display name like "WebAppLoadTestCDIntToken".
+    When a Microsoft Teams Integration Messaging Extension is set up, it creates a token with a display name like "Microsoft Teams Integration".
+
+If you still believe that a PAT exists in error, we suggest that you revoke the PAT. Next, change your password. As an Azure Active Directory user, check with your administrator to see if your organization was used from an unknown source or location.
+Q: How can I use a PAT in my code?
+
+A: See the following sample that gets a list of builds using curl.
+
+curl -u username[:{personalaccesstoken}] https://dev.azure.com/{organization}/_apis/build-release/builds
+
+
+If you wish to provide the PAT through an HTTP header, first convert it to a Base64 string (the following example shows how to convert to Base64 using C#). The resulting string can then be provided as an HTTP header in the following format:
+Authorization: Basic BASE64USERNAME:PATSTRING
+Here it is in C# using the HttpClient class.
+
+public static async void GetBuilds()
+{
+    try
+    {
+        var personalaccesstoken = "PATFROMWEB";
+
+        using (HttpClient client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+                Convert.ToBase64String(
+                    System.Text.ASCIIEncoding.ASCII.GetBytes(
+                        string.Format("{0}:{1}", "", personalaccesstoken))));
+
+            using (HttpResponseMessage response = client.GetAsync(
+                        "https://dev.azure.com/{organization}/{project}/_apis/build/builds?api-version=5.0").Result)
+            {
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(responseBody);
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+    }
+}
+
+
+Tip
+
+When you're using variables, add a "$" at the beginning of the string, like the following example.
+
+public static async void GetBuilds()
+{
+    try
+    {
+        var personalaccesstoken = "PATFROMWEB";
+
+        using (HttpClient client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+                Convert.ToBase64String(
+                    System.Text.ASCIIEncoding.ASCII.GetBytes(
+                        string.Format("{0}:{1}", "", personalaccesstoken))));
+
+            using (HttpResponseMessage response = client.GetAsync(
+                        $"https://dev.azure.com/{organization}/{project}/_apis/build/builds?api-version=5.0").Result)
+            {
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(responseBody);
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+    }
+}
+
 
 ## Pull Requests
 
