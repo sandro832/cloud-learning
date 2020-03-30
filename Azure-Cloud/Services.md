@@ -30,3 +30,6 @@ Web Sites
 2. Blob storage is really cheap
 3. Upload data (Inbound) is complete free in Azure. Download Outbound is charched.
 
+## SLA
+
+Both Azure DevOps Services and Azure DevOps Server are enterprise-ready platforms that support teams of any size, from tens to thousands. Azure DevOps Services, our cloud service, provides a scalable, reliable, and globally available hosted service. It is backed by a 99.9% SLA, monitored by our 24x7 operations team, and available in local data centers around the world.
