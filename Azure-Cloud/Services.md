@@ -17,6 +17,7 @@ Web Sites
 1. Blob Storage --> Binary storage (big binary file)
 2. IaaS relational storage: Run a Database in a VM
 3. PaaS relational storage: SQL Database
+4. Stor simple
 
 ## Networking
 
