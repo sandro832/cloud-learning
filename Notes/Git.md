@@ -298,5 +298,91 @@ Maybe you have to make changes/fixes based on feedback.
 
 The target of this integration (i.e. the branch that receives changes) is always the currently checked out HEAD branch.
 
+## .git Folder
+
+The .git folder contains all the information that is necessary for your project in version control and all the information about commits, remote repository address, etc. All of them are present in this folder. It also contains a log that stores your commit history so that you can roll back to history.
+
+### Objects/[0-9a-f][0-9a-f]
+
+A newly created object is stored in its own file. The objects are splayed over 256 subdirectories using the first two characters of the sha1 object name to keep the number of directory entries in objects itself to a manageable number. Objects found here are often called unpacked (or loose) objects.
+
+### objects/pack
+
+Packs (files that store many objects in compressed form, along with index files to allow them to be randomly accessed) are found in this directory.
+
+### objects/info
+
+Additional information about the object store is recorded in this directory.
+
+## refs
+
+References are stored in subdirectories of this directory. The git prune command knows to preserve objects reachable from refs found in this directory and its subdirectories. 
+
+### refs/heads/name
+
+records tip-of-the-tree commit objects of branch name.
+
+### refs/tags/name
+
+records any object name (not necessarily a commit object, or a tag object that points at a commit object).
+
+### refs/remotes/name
+
+records tip-of-the-tree commit objects of branches copied from a remote repository.
+
+## Head 
+
+Shows the current brach that you are in.
+
+## config 
+
+This is the config file of git with your prefereces.
+
+## Logs
+
+Records of cahnges made to refs are stored in this directory. 
+
+### logs/refs/heads/name
+
+Records all changes made to the branch tip named name.
+
+### logs/refs/tags/name
+
+Records all changes made to the tag named name.
+
+## Worktrees
+
+Contains administrative data for linked working trees. Each subdirectory contains the working tree-related part of a linked working tree. 
+
+## Merge
+
+Merging is a common practice for developers using version control systems. Whether branches are created for testing, bug fixes, or other reasons, merging commits changes to another location. To be more specific, merging takes the contents of a source branch and integrates them with a target branch. In this process, only the target branch is changed. The source branch history remains the same.
+
+Pros:
+  1. Simple and familiar.
+  1. Preserves complete history and chronological order.
+  1. Maintains the context of the branch.
+
+Contras:
+  1. Commit history can become polluted by lots of merge commits.
+  1. Debbuging using git bisect can become harder.
+
+
+## rebase 
+
+Rebase is another way to integrate changes from one branch to another. Rebase compresses all the changes into a single “patch.” Then it integrates the patch onto the target branch.
+
+Unlike merging, rebasing flattens the history because it transfers the completed work from one branch to another. In the process, unwanted history is eliminated.
+
+Pros: 
+  1. Streamlines a potentially complex history.
+  1. Manipulating a singel commmit is easy.
+  1. Avoids merge commit "noise in busy repos with busy branches.
+  1. Cleans intermidiate commits by making them to one.
+
+Contras:
+  1. Rebasing public repositories can be dangerous when working as a team.
+  1. Squashing the feature down to a handful of commits can hide the context.
+  1. It’s more work: Using rebase to keep your feature branch updated always.
 
 
