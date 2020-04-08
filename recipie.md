@@ -33,3 +33,4 @@ Variante: Mailänder Risotto
 30 g 	Parmesan, frisch gerieben
 	Crème fraîche, 1 - 2 EL
 	Salz und Pfeffer 
+20 Löffe Zucker
