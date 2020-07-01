@@ -1,2 +1,2 @@
-rg_name = "sandro-tf"
-account_name ="sandro-tf"
+rg_name = "sandro0tf"
+account_name ="sandro0tf"
