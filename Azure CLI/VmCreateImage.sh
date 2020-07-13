@@ -19,9 +19,7 @@ sudo waagent -deprovision+user -force
 exit
 
 #In Azure CLI, deallocate the virtual machine
-az vm deallocate \
-   --resource-group "Linux-imgae_group" \
-    --name "linux-imagae"
+az vm deallocate --resource-group "Linux-imgae_group" --name "linux-imagae"
 
 #Check out the status of our virtual machine
 az vm list --show-details --output table
