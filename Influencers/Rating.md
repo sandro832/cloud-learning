@@ -10,4 +10,5 @@ Paolo Perrotta | How Git Works | No | 7  |Special voice, good step by step expla
 Neil Morrissey | Azure Storage | No | 6 | Sometimes goes a bit fast
 Jeff Hicks | PowerShell | Yes | 7 | Is very talanted at what he does
 Don Jones | PowerShell | No | 5 | Didents liked his explaniations
+Anthony E. Nocentino | Virtuel Machines | a bit | 8 | Goes step by step and dont rushes
 
