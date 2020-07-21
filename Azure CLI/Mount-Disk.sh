@@ -15,7 +15,7 @@ az login --subscription ""
 
 # 2./ Creates a new data disk with Azure CLI and attaches it to your VM. This can be done hot. 
 
-az vm disk attach --resource-group "" --vm-name "" --disk "" --new --size-gb 25 --sku""
+az vm disk attach --resource-group "Sandro-rg1" --vm-name "psdemo-vm-linux" --name "psdemo-disk" --new --size-gb 25 --sku "Standard_LRS"
 
 # 3./ Prepare the disk for usage
 
@@ -27,7 +27,9 @@ ssh -l demoadmin wxyz
 
 # 5./ Find the block device its in the /dev/sdc and is 25GB
 
-lsblk ---- dmesg | grep SCI
+lsblk ---- dmesg | grep SCI 
+
+ sudo file -s /dev/sdc # Checks if disk is already formated. Shows Data if not
 
 # 6./ partition the disk with fdisk and use the follweing commands to name a new primary partitions
 
@@ -41,6 +43,8 @@ w
 
 sudo mkfs -t ext4 /dev/sdc1
 
+sudo mkfs -t xfs /dev/sdc1
+
 # 8./ Make a directory to mount the new disk under
 
 sudo mkdir /data1
@@ -51,7 +55,7 @@ sudo -i blkid | grep sdc1
 
 # 10./ Put the UUID along with some other information in the /etc/fstab so, look like this along with the mounting point and filesystem
 
-UUID=43f43tfq3-q34-5643qt-q435qt-435-43     /data1      ext4        defaults    0 0
+UUID=ff7be5db-aa42-493d-bb86-087b146ca493     /data1      ext4        defaults    0 0
 
 # 11./ Mount the volume and verify the file system is mounted. 
 
