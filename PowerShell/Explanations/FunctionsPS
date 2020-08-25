@@ -1,0 +1,23 @@
+Short description
+
+Describes how to create and use functions in PowerShell.
+Long description
+
+A function is a list of PowerShell statements that has a name that you assign. When you run a function, you type the function name. The statements in the list run as if you had typed them at the command prompt.
+
+Functions can be as simple as:
+PowerShell
+
+function Get-PowerShellProcess { Get-Process PowerShell }
+
+A function can also be as complex as a cmdlet or an application program.
+
+Like cmdlets, functions can have parameters. The parameters can be named, positional, switch, or dynamic parameters. Function parameters can be read from the command line or from the pipeline.
+
+Functions can return values that can be displayed, assigned to variables, or passed to other functions or cmdlets. You can also specify a return value using the return keyword. The return keyword does not affect or suppress other output returned from your function. However, the return keyword exits the function at that line. For more information, see about_Return.
+
+The function's statement list can contain different types of statement lists with the keywords Begin, Process, and End. These statement lists handle input from the pipeline differently.
+
+A filter is a special kind of function that uses the Filter keyword.
+
+Functions can also act like cmdlets. You can create a function that works just like a cmdlet without using C# programming. For more information, see about_Functions_Advanced.
