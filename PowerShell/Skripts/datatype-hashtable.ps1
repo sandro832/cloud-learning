@@ -11,6 +11,7 @@ $hashtable = @{
     "PowerOff"    = "Override"
     "APM"         = "ILCMR"
     "Department"  = "P&C"
+    "Testing"     = "goodbye crewl world"
     }
 
 $hashtable.gettype()
@@ -36,6 +37,15 @@ $hashtable.Remove["DB"]
 
 "Access existing item: " + $hashtable["Department"]
 
+"our tests"
+
 $hashtable
 
+"looping through hastable:"
+
+Foreach ($item in $hashtable.GetEnumerator()) {
+    $item.Name + " -> " + $item.Value
+}
+
+$hashtable.ContainsKey("Testing")
 
