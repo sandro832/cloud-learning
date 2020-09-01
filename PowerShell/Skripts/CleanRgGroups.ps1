@@ -16,10 +16,10 @@ Foreach ($ResourceItem in $RgList) {
 
     if ($ResourceItem.Tags -and $ResourceItem.Tags.ContainsKey("Testing"))
     {     
-        Remove-AzResourceGroup -ResourceGroupName $ResourceItem -Force
+        Remove-AzResourceGroup -Name $ResourceItem.ResourceGroupName -Force
     }
     Else {
-        "Group is nessesarry" + $Rg.ResourceGroupName
+        "Group is nessesarry" 
     }
 }
     
