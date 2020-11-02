@@ -102,6 +102,9 @@ $LinuxVmConfig = New-AzVMConfig `
 $password = ConvertTo-SecureString 'ignorepassword123412123$%^&*' -AsPlainText -Force
 $LinuxCred = New-Object System.Management.Automation.PSCredential ($Username, $password)
 
+Set-AzVMBootDiagnostic -VM $VmName -Enable -ResourceGroupName "SandroVaults" -StorageAccountName "1bootdiagnostic"
+Update-AzVM -VM $VmName
+
 $LinuxVmConfig = Set-AzVMOperatingSystem `
     -VM $LinuxVmConfig `
     -Linux `
