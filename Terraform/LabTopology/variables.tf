@@ -4,8 +4,7 @@ variable "rg_name" {
  description = "resource group name"   
 }
 
-variable "account_name" {
+variable "location_name" {
  type = string
- description = "storage account name"
 }
 

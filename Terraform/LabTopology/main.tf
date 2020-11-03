@@ -3,12 +3,13 @@ terraform {
 }
 
 provider "azurerm" {
+  version = "=2.20.0"
  features {}
 }
 
 resource "azurerm_resource_group" "rg" {
  name     = var.rg_name
- location = "westeurope"
+ location = var.location_name
 }
 
 resource "azurerm_storage_account" "stg" {

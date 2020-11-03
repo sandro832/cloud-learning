@@ -1,2 +1,2 @@
-rg_name = ""
-account_name =""
+rg_name = "SandrosLab"
+location_name ="westeurope"
