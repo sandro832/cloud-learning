@@ -1,3 +1,3 @@
-rg_name = "SandrosLab"
+rg_name = "SandrosLab2"
 location ="westeurope"
-prefix = "lab1demo"
+

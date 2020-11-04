@@ -4,7 +4,9 @@ variable "rg_name" {
  description = "resource group name"   
 }
 
-variable "location_name" {
- type = string
-}
 
+# Lab 1
+
+variable "location" {
+  description = "The Azure Region in which all resources in this example should be created."
+}
