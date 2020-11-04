@@ -5,8 +5,10 @@
 # Set-azcontext -Subscription e67a50bc-70b2-4838-8598-c9fb1880a4ac
 
 
-$GroupName = 'Sandro-Load-balance'
+$GroupName = 'SandroWebserver'
 $Location  = 'westeurope'
+
+$ImageName = 'SandroLinuxWWW'
 
 $VnetName      = 'psdemo-vnt'
 $CIDR          = '172.17.0.0/16'
@@ -25,11 +27,11 @@ $VmSize        = 'Standard_D2_v2'
 $Username      = 'demoadmin'
 $PathPubKey    = 'C:\srdev\Keys\2020-Q3-Pub.txt'
 
-$rg = New-AzResourceGroup -Name $GroupName -Location $Location
-#$rg = Get-AzResourceGroup -Name $GroupName 
+#$rg = New-AzResourceGroup -Name $GroupName -Location $Location
+$rg = Get-AzResourceGroup -Name $GroupName 
 
 $rg
-
+$image = Get-AzImage -ResourceGroupName $GroupName -ImageName $ImageName
 
 $subnetConfig = New-AzVirtualNetworkSubnetConfig `
     -Name $SubnetName `
@@ -102,9 +104,6 @@ $LinuxVmConfig = New-AzVMConfig `
 $password = ConvertTo-SecureString 'ignorepassword123412123$%^&*' -AsPlainText -Force
 $LinuxCred = New-Object System.Management.Automation.PSCredential ($Username, $password)
 
-Set-AzVMBootDiagnostic -VM $VmName -Enable -ResourceGroupName "SandroVaults" -StorageAccountName "1bootdiagnostic"
-Update-AzVM -VM $VmName
-
 $LinuxVmConfig = Set-AzVMOperatingSystem `
     -VM $LinuxVmConfig `
     -Linux `
@@ -122,10 +121,7 @@ Add-AzVMSshPublicKey `
 
 $LinuxVmConfig = Set-AzVMSourceImage `
     -VM $LinuxVmConfig `
-    -PublisherName 'Canonical' `
-    -Offer 'UbuntuServer' `
-    -Skus '19.04' `
-    -Version 'latest' 
+    -Id $image.Id
 
 $LinuxVmConfig = Add-AzVMNetworkInterface `
     -VM $LinuxVmConfig `
