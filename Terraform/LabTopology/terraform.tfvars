@@ -1,3 +1,6 @@
-rg_name = "SandrosLab2"
-location ="westeurope"
-
+rg_name             = "SandrosLab"
+location            = "westeurope"
+jumphost_address    = "193.34.170.35/32"
+admin_user          = "adminuser"
+filename_public_key = "C:\\SRDEV\\Keys\\2020-Q4-Pub.txt"
+linux_distro        = "18.04-LTS"
