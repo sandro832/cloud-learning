@@ -274,8 +274,8 @@ module "ruby"{
 //Route Table
 //########################################################################################
 
-resource "azurerm_route_table" "RouteTable" {
-  name                          = "RouteTable"
+resource "azurerm_route_table" "subnetHA" {
+  name                          = "subnetHA"
   location                      = azurerm_resource_group.main.location
   resource_group_name           = azurerm_resource_group.main.name
   disable_bgp_route_propagation = false
@@ -287,7 +287,49 @@ resource "azurerm_route_table" "RouteTable" {
     next_hop_in_ip_address = azurerm_firewall.firewall.ip_configuration[0].private_ip_address
   }  
 }
-// Todo: Review if luna in subnet sa can reach internet. Also rubby in subnet hb
+
+resource "azurerm_subnet_route_table_association" "subnetHA" {
+  subnet_id      = azurerm_subnet.subnetHA.id
+  route_table_id = azurerm_route_table.subnetHA.id
+}
+
+resource "azurerm_route_table" "subnetHB" {
+  name                          = "subnetHB"
+  location                      = azurerm_resource_group.main.location
+  resource_group_name           = azurerm_resource_group.main.name
+  disable_bgp_route_propagation = false
+
+  route {
+    name                  = "internet"
+    address_prefix        = "0.0.0.0/0"
+    next_hop_type         = "VirtualAppliance"
+    next_hop_in_ip_address = azurerm_firewall.firewall.ip_configuration[0].private_ip_address
+  }  
+}
+
+resource "azurerm_subnet_route_table_association" "subnetHB" {
+  subnet_id      = azurerm_subnet.subnetHB.id
+  route_table_id = azurerm_route_table.subnetHB.id
+}
+
+resource "azurerm_route_table" "subnetSA" {
+  name                          = "subnetSA"
+  location                      = azurerm_resource_group.main.location
+  resource_group_name           = azurerm_resource_group.main.name
+  disable_bgp_route_propagation = false
+
+  route {
+    name                  = "internet"
+    address_prefix        = "0.0.0.0/0"
+    next_hop_type         = "VirtualAppliance"
+    next_hop_in_ip_address = azurerm_firewall.firewall.ip_configuration[0].private_ip_address
+  }  
+}
+
+resource "azurerm_subnet_route_table_association" "subnetSA" {
+  subnet_id      = azurerm_subnet.subnetSA.id
+  route_table_id = azurerm_route_table.subnetSA.id
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
