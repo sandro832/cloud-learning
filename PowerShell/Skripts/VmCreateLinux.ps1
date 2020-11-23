@@ -20,7 +20,7 @@ $NsgName       = 'psdemo-nsg-linux'
 $NicName       = 'psdemo-nic-linux'
 
 $VmName        = 'psdemo-vm-linux'
-$VmSize        = 'Standard_D2_v2'
+$VmSize        = 'Standard_D2_v2' # richtiger vm typ finden!!   D2s
 
 $Username      = 'demoadmin'
 $PathPubKey    = 'C:\srdev\Keys\2020-Q3-Pub.txt'
@@ -124,7 +124,7 @@ $LinuxVmConfig = Set-AzVMSourceImage `
     -VM $LinuxVmConfig `
     -PublisherName 'Canonical' `
     -Offer 'UbuntuServer' `
-    -Skus '19.04' `
+    -Skus '18.04' `
     -Version 'latest' 
 
 $LinuxVmConfig = Add-AzVMNetworkInterface `
