@@ -20,10 +20,11 @@ $NsgName       = 'psdemo-nsg-linux'
 $NicName       = 'psdemo-nic-linux'
 
 $VmName        = 'psdemo-vm-linux'
-$VmSize        = 'Standard_D2_v2' # richtiger vm typ finden!!   D2s
+$VmSize        = 'Standard_D2s_v3' # Get-AzVMSize -Location 'westeurope' | Where {($_.NumberOfCores -EQ '2')}
+$VmSku         = '18_04-lts-gen2'  # Get-AzVmImageSku -Location 'westeurope' -Offer 'UbuntuServer' -PublisherName 'Canonical'
 
 $Username      = 'demoadmin'
-$PathPubKey    = 'C:\srdev\Keys\2020-Q3-Pub.txt'
+$PathPubKey    = 'C:\srdev\Keys\2020-Q4-Pub.txt'
 
 $rg = New-AzResourceGroup -Name $GroupName -Location $Location
 #$rg = Get-AzResourceGroup -Name $GroupName 
@@ -124,7 +125,7 @@ $LinuxVmConfig = Set-AzVMSourceImage `
     -VM $LinuxVmConfig `
     -PublisherName 'Canonical' `
     -Offer 'UbuntuServer' `
-    -Skus '18.04' `
+    -Skus $VmSku `
     -Version 'latest' 
 
 $LinuxVmConfig = Add-AzVMNetworkInterface `
