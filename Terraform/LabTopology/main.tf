@@ -26,7 +26,7 @@ resource "azurerm_virtual_network" "hub" {
 }
 
 resource "azurerm_virtual_network_peering" "hub" {
-  name                         = "peer1to2"
+  name                         = "hub to spoke"
   resource_group_name          = azurerm_resource_group.main.name
   virtual_network_name         = azurerm_virtual_network.hub.name
   remote_virtual_network_id    = azurerm_virtual_network.spoke.id
@@ -69,7 +69,7 @@ resource "azurerm_virtual_network" "spoke" {
 }
 
 resource "azurerm_virtual_network_peering" "spoke" {
-  name                         = "peer2to1"
+  name                         = "spoke to hub"
   resource_group_name          = azurerm_resource_group.main.name
   virtual_network_name         = azurerm_virtual_network.spoke.name
   remote_virtual_network_id    = azurerm_virtual_network.hub.id
@@ -331,6 +331,8 @@ resource "azurerm_subnet_route_table_association" "subnetSA" {
   route_table_id = azurerm_route_table.subnetSA.id
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//VNET Spoke Subnet Level NSG
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 resource "azurerm_network_security_group" "nsg4" {
