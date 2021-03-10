@@ -1,11 +1,9 @@
 terraform {
-  required_version = ">=0.12.7"
 }
 
 provider "azurerm" {
-  version = ">=2.2.0"
   features {}
-  subscription_id = "68357aff-7637-4771-b196-1f5606d4e8a3"
+  subscription_id = "e67a50bc-70b2-4838-8598-c9fb1880a4ac"
 }
 
 resource "azurerm_resource_group" "rg" {
