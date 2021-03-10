@@ -9,4 +9,4 @@ clients = {
     vm4 = { name = "saskia", sec_group_name = "nsg4" },
     vm5 = { name = "zena", sec_group_name = "nsg5" }
     vm6 = { name = "clair", sec_group_name = "nsg6" }
-  }aaaaaaaa
+  }
